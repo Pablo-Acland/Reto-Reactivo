@@ -28,7 +28,10 @@ public class AutoServiceImpl implements AutoService {
 
     @Override
     public Mono<Auto> update(String id, Auto auto) {
-        return null;
+        return this.autoRepository.findById(id).flatMap(auto1 -> {
+            auto.setId(id);
+            return save(auto);
+        }).switchIfEmpty(Mono.empty());
     }
 
     @Override

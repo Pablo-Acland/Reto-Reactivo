@@ -5,6 +5,7 @@ import co.com.sofka.retoreactivo.model.Auto;
 import co.com.sofka.retoreactivo.service.AutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,5 +27,13 @@ public class AutoController {
     private Flux<Auto> findAll() {
         return this.autoService.findAll();
     }
+
+    @PutMapping("/auto/update/{id}")
+    public Mono<ResponseEntity<Auto>> updateCliente(@PathVariable("id") String id, @RequestBody Auto auto) {
+        return this.autoService.update(id, auto).flatMap(auto1 -> Mono.just(ResponseEntity.ok(auto1)))
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    
 
 }

@@ -36,6 +36,7 @@ public class AutoServiceImpl implements AutoService {
 
     @Override
     public Mono<Auto> delete(String id) {
-        return null;
+        return this.autoRepository.findById(id).flatMap(auto -> this.autoRepository.deleteById(auto.getId())
+                .thenReturn(auto));
     }
 }

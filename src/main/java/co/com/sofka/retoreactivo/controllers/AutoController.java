@@ -19,7 +19,7 @@ public class AutoController {
 
     @PostMapping("/auto")
     @ResponseStatus(HttpStatus.CREATED)
-    private Mono<Auto> saveCliente(@RequestBody Auto auto) {
+    private Mono<Auto> saveAuto(@RequestBody Auto auto) {
         return this.autoService.save(auto);
     }
 
@@ -29,11 +29,15 @@ public class AutoController {
     }
 
     @PutMapping("/auto/update/{id}")
-    public Mono<ResponseEntity<Auto>> updateCliente(@PathVariable("id") String id, @RequestBody Auto auto) {
+    public Mono<ResponseEntity<Auto>> updateAuto(@PathVariable("id") String id, @RequestBody Auto auto) {
         return this.autoService.update(id, auto).flatMap(auto1 -> Mono.just(ResponseEntity.ok(auto1)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
-    
+    @DeleteMapping("/auto/delete/{id}")
+    private Mono<ResponseEntity<Auto>> deleteAuto(@PathVariable("id") String id) {
+        return this.autoService.delete(id).flatMap(auto1 -> Mono.just(ResponseEntity.ok(auto1)))
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
 
 }

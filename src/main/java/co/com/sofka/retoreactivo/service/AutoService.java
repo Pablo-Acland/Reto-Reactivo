@@ -7,6 +7,7 @@ import reactor.core.publisher.Mono;
 public interface AutoService {
     Mono<Auto> save(Auto auto);
     Flux<Auto> findAll();
+    Mono<Auto> findById(String id);
     Mono<Auto> update(String id, Auto auto);
     Mono<Auto> delete(String id);
 

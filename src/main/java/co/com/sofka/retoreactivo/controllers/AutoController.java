@@ -28,6 +28,13 @@ public class AutoController {
         return this.autoService.findAll();
     }
 
+    @GetMapping(value = "/Auto/{id}")
+    private Mono<Auto> findById(@PathVariable("id") String id) {
+        return this.autoService.findById(id);
+    }
+    
+
+
     @PutMapping("/auto/update/{id}")
     public Mono<ResponseEntity<Auto>> updateAuto(@PathVariable("id") String id, @RequestBody Auto auto) {
         return this.autoService.update(id, auto).flatMap(auto1 -> Mono.just(ResponseEntity.ok(auto1)))
